@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - VitalBox{% endblock %}
+
+{% block content %}
+<section id="valor">
+  <h2>Propuesta de valor</h2>
+  <p>Entregamos comidas caseras 100% saludables y balanceadas directo a tu puerta. Preparamos cada plato con ingredientes frescos y naturales, sin conservantes ni procesados, para que comas rico y nutritivo sin tiempo de cocinar.</p>
+</section>
+
+<section id="clientes">
+  <h2>Segmento de clientes</h2>
+  <p>Profesionales de 25-45 años que trabajan desde casa o en oficina, no tienen tiempo para cocinar pero quieren mantener una alimentación saludable. Personas que buscan perder peso o mejorar sus hábitos alimenticios sin sacrificar el sabor.</p>
+</section>
+
+<section id="validacion">
+  <h2>Validación de Interés</h2>
+  <form id="validacion" method="POST" action="#">
+    <div class="form-grid">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Tu nombre">
+
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com">
+      <div class="tooltip" id="correo-tooltip" style="grid-column: 2 / 3;">Falta el símbolo "@" en el correo</div>
+
+      <label for="interes">¿Te interesa este producto/servicio?</label>
+      <select id="interes" name="interes">
+        <option value="">Selecciona una opción</option>
+        <option value="si">Sí</option>
+        <option value="no">No</option>
+      </select>
+
+      <label for="precio">Precio que pagarías (USD):</label>
+      <input type="number" id="precio" name="precio" min="0" step="1" placeholder="Ej. 15">
+
+      <label for="comentario">Comentario:</label>
+      <textarea id="comentario" name="comentario" rows="4" placeholder="Escribe tu opinión..."></textarea>
+
+      <div></div>
+      <button type="submit">Enviar</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

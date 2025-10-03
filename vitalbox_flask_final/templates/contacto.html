@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Contacto - VitalBox{% endblock %}
+
+{% block content %}
+<section>
+  <h2>Contáctanos</h2>
+  <p>¿Tienes preguntas sobre nuestros servicios? ¿Quieres conocer más sobre nuestros planes de alimentación? Estamos aquí para ayudarte.</p>
+</section>
+
+<section>
+  <h3>Formulario de Contacto</h3>
+  <form class="form-grid" method="POST" action="#">
+    <label for="nombre_contacto">Nombre:</label>
+    <input type="text" id="nombre_contacto" name="nombre_contacto" placeholder="Tu nombre completo" required>
+
+    <label for="email_contacto">Correo electrónico:</label>
+    <input type="email" id="email_contacto" name="email_contacto" placeholder="ejemplo@correo.com" required>
+
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono" placeholder="+57 XXX XXXXXXX" required>
+
+    <label for="asunto">Asunto:</label>
+    <select id="asunto" name="asunto" required>
+      <option value="">Selecciona un asunto</option>
+      <option value="planes">Planes de alimentación</option>
+      <option value="entrega">Entrega a domicilio</option>
+      <option value="nutricion">Asesoría nutricional</option>
+      <option value="otro">Otro</option>
+    </select>
+
+    <label for="mensaje_contacto">Mensaje:</label>
+    <textarea id="mensaje_contacto" name="mensaje_contacto" rows="6" placeholder="Escribe tu mensaje aquí..." required></textarea>
+
+    <div></div>
+    <button type="submit">Enviar Mensaje</button>
+  </form>
+</section>
+
+<section>
+  <h3>Información de Contacto</h3>
+  <p><strong>Email:</strong> info@vitalbox.com</p>
+  <p><strong>Teléfono:</strong> +57 XXX XXXXXXX</p>
+  <p><strong>WhatsApp:</strong> +57 XXX XXXXXXX</p>
+  <p><strong>Dirección:</strong> Cra 94 #127-9</p>
+  <p><strong>Horario de atención:</strong> Lunes a Viernes, 8:00 AM - 7:00 PM | Sábados, 9:00 AM - 2:00 PM</p>
+</section>
+
+<section>
+  <h3>Síguenos en Redes Sociales</h3>
+  <ul class="lista">
+    <li>Instagram: @vitalbox_oficial</li>
+    <li>Facebook: VitalBox</li>
+    <li>Twitter: @VitalBoxFood</li>
+  </ul>
+</section>
+{% endblock %}
