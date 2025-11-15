@@ -63,6 +63,7 @@ El proyecto utiliza **CSS Grid** con la siguiente distribución:
 
 - Python 3.7 o superior
 - pip (gestor de paquetes de Python)
+- MySQL / MariaDB (si usas las funcionalidades que guardan datos en la base de datos)
 
 ## Instalación
 
@@ -87,19 +88,20 @@ source venv/bin/activate
 ```
 
 **En Windows:**
-```bash
+```powershell
 venv\Scripts\activate
 ```
 
 ### 4. Instalar dependencias
 
+Si se dispone de `requirements.txt`:
 ```bash
 pip install -r requirements.txt
 ```
 
-O instalar Flask directamente:
+O instalar Flask y la librería MySQL directamente:
 ```bash
-pip install flask
+pip install flask flask-mysqldb
 ```
 
 ## Ejecución
@@ -165,6 +167,67 @@ El diseño utiliza CSS Grid con:
 - **3 columnas**: 200px (navbar) | 1fr (contenido) | 350px (aside)
 - **4 filas**: auto (header) | auto (espacio) | 1fr (contenido principal) | auto (footer)
 - **Responsive**: Se adapta a tablets y móviles
+
+## Base de Datos (MySQL)
+
+La aplicación utiliza MySQL para almacenar las validaciones enviadas desde el formulario. A continuación encontrarás los pasos y el script SQL para crear la base de datos y la tabla requerida.
+
+Prerequisitos:
+
+- Tener un servidor MySQL/MariaDB instalado y en ejecución.
+- Conocer un usuario con permisos para crear bases de datos (por ejemplo `root`).
+
+1) Crear la base de datos y la tabla `validacion` (ejecutar en el cliente MySQL o MySQL Workbench):
+
+```sql
+-- Crear la base de datos
+CREATE DATABASE IF NOT EXISTS vitalbox CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE vitalbox;
+
+-- Crear la tabla `validacion`
+CREATE TABLE IF NOT EXISTS validacion (
+  ID_Validacion INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  email VARCHAR(120) NOT NULL,
+  interes VARCHAR(100),
+  precio VARCHAR(50),
+  comentario TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+2) (Opcional) Asignar permisos a un usuario específico (cambia `mi_usuario` y `mi_password` según corresponda):
+
+```sql
+CREATE USER IF NOT EXISTS 'mi_usuario'@'localhost' IDENTIFIED BY 'mi_password';
+GRANT ALL PRIVILEGES ON vitalbox.* TO 'mi_usuario'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+3) Configurar las credenciales en `vitalbox_flask_final/app.py` (líneas de configuración):
+
+- `app.config['MYSQL_HOST']` — host de la base de datos (por defecto `localhost`).
+- `app.config['MYSQL_USER']` — usuario de MySQL (por ejemplo `root` o `mi_usuario`).
+- `app.config['MYSQL_PASSWORD']` — contraseña del usuario.
+- `app.config['MYSQL_DB']` — nombre de la base de datos (debe ser `vitalbox`).
+
+Ejemplo (ajusta según tu entorno):
+
+```python
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''  # o 'mi_password'
+app.config['MYSQL_DB'] = 'vitalbox'
+```
+
+4) Reiniciar la aplicación Flask después de cambiar la configuración.
+
+Notas y consejos:
+
+- Si instalas `mysqlclient` en Windows y tienes problemas, puede requerir las Build Tools de Visual Studio; como alternativa puedes usar una capa como `PyMySQL` y el conector correspondiente.
+- Asegúrate de que el servidor MySQL esté escuchando en `localhost` y que el puerto por defecto (3306) no esté bloqueado por un firewall local.
+
+Con esto la aplicación podrá insertar, listar y eliminar registros en la tabla `validacion` mediante las rutas definidas en `app.py` (`/insertar`, `/consulta`, `/eliminar/<id>`).
 
 ## Personalización
 
